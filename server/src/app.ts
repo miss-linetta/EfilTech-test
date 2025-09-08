@@ -6,9 +6,12 @@ import ordersRouter from './routes/orders';
 import detailsRouter from './routes/details';
 
 const app = express();
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
-app.use(cors());
+app.use(cors({
+    origin: '*',
+}));
+
 
 app.use(express.json());
 
@@ -18,5 +21,5 @@ app.use('/orders', ordersRouter)
 app.use('/orders/details', detailsRouter);
 
 app.listen(PORT, () => {
-    console.log(`🚀 Server running at http://localhost:${PORT}`);
+    console.log(`Server running at http://localhost:${PORT}`);
 });

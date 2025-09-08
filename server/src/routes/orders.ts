@@ -1,6 +1,5 @@
-// src/routes/orders.ts
 import express from "express";
-import { OrderData } from "../services/types"; // <-- імпорт правильного типу
+import { OrderData } from "../services/types";
 import { createOrder } from "../services/ordersService";
 
 const router = express.Router();

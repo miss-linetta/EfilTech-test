@@ -16,7 +16,6 @@ export interface Bouquet {
     image_url: string | null;
 }
 
-// src/services/types/[id].ts
 export interface OrderItem {
     flower_id: number;
     quantity: number;
@@ -40,9 +39,6 @@ export interface OrderData {
     items: OrderItem[];
 }
 
-
-
-// src/services/types/RequestOrderData.ts
 export interface ReqOrderData {
     firstName: string;
     lastName: string;

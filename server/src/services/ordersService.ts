@@ -1,5 +1,5 @@
 import pool from "../db";
-import { OrderData, OrderItem } from "./types";
+import { OrderData } from "./types";
 
 export const createOrder = async (order: OrderData) => {
     const client = await pool.connect();
@@ -7,7 +7,6 @@ export const createOrder = async (order: OrderData) => {
     try {
         await client.query("BEGIN");
 
-        // Створюємо замовлення
         const orderQuery = `
       INSERT INTO orders (
         first_name,
@@ -42,7 +41,6 @@ export const createOrder = async (order: OrderData) => {
         const { rows } = await client.query(orderQuery, orderValues);
         const orderId = rows[0].id;
 
-        // Записуємо товари в order_items
         const insertItemQuery = `
       INSERT INTO order_items (order_id, flower_id, quantity, price)
       VALUES ($1, $2, $3, $4);

@@ -15,7 +15,6 @@ export const getOrderById = async (orderId: number): Promise<OrderData | null> =
 
         const order = orderRes.rows[0];
 
-        // Беремо товари з order_items
         const itemsRes = await pool.query(
             `SELECT flower_id, quantity, price
        FROM order_items
