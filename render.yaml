@@ -21,4 +21,3 @@ databases:
   - name: test-task-db
     plan: free
     region: oregon
-    postgresVersion: "15"
