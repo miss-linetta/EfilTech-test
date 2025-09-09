@@ -3,9 +3,10 @@ export interface Article {
   name: string;
   price: number | string;
   description?: string;
-  image_url: string;
+  imageUrl?: string;
   stock?: number;
   shopName?: string;
+  type: 'flower' | 'bouquet';
 }
 
 export interface Bouquet {

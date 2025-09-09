@@ -1,17 +1,17 @@
-import { TypographyStyleOptions } from '@mui/material/styles/createTypography';
+import { Theme } from '@mui/material/styles';
 
 export interface AppTypography {
   fontFamily: string;
-  h1: TypographyStyleOptions;
-  h2: TypographyStyleOptions;
-  h3: TypographyStyleOptions;
-  h4: TypographyStyleOptions;
-  h5: TypographyStyleOptions;
-  h6: TypographyStyleOptions;
-  body1: TypographyStyleOptions;
-  body1Medium: TypographyStyleOptions;
-  body2: TypographyStyleOptions;
-  overline: TypographyStyleOptions;
-  button: TypographyStyleOptions;
-  caption: TypographyStyleOptions;
+  h1: Theme['typography']['h1'];
+  h2: Theme['typography']['h2'];
+  h3: Theme['typography']['h3'];
+  h4: Theme['typography']['h4'];
+  h5: Theme['typography']['h5'];
+  h6: Theme['typography']['h6'];
+  body1: Theme['typography']['body1'];
+  body1Medium: Theme['typography']['body1'];
+  body2: Theme['typography']['body2'];
+  overline: Theme['typography']['overline'];
+  button: Theme['typography']['button'];
+  caption: Theme['typography']['caption'];
 }

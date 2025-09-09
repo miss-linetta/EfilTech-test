@@ -19,12 +19,15 @@ const sortOptionsMap: Record<PageType, SortOption[]> = {
     { value: 'amount_asc', label: 'Total Amount (Low to High)' },
   ],
 };
+const SortOptions = <T extends string>({
+  sortOption,
+  setSortOption,
+  pageType,
+}: SortOptionsProps<T>) => {
+  const options = sortOptionsMap[pageType] as SortOption<T>[];
 
-const SortOptions: React.FC<SortOptionsProps> = ({ sortOption, setSortOption, pageType }) => {
-  const options = sortOptionsMap[pageType] || [];
-
-  const handleChange = (event: SelectChangeEvent<unknown>, _child: React.ReactNode) => {
-    setSortOption(event.target.value as string);
+  const handleChange = (event: SelectChangeEvent<unknown>) => {
+    setSortOption(event.target.value as T);
   };
 
   return (

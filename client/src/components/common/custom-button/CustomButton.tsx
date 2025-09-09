@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from '@mui/material';
+import { Button, SxProps, Theme } from '@mui/material';
 
 import * as styles from './CustomButton.styles';
 
@@ -19,7 +19,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   return (
     <Button
       variant="contained"
-      sx={{ ...buttonStyles, ...sx }}
+      sx={{ ...buttonStyles, ...sx } as SxProps<Theme>}
       type={type}
       onClick={onClick}
       disabled={disabled}

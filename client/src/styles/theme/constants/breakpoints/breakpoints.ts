@@ -1,3 +1,5 @@
+import { AppBreakpoints } from '@/styles/theme/constants/breakpoints/types';
+
 const breakpoints: AppBreakpoints = {
   mobile: 0,
   mobileSemiMedium: 375,

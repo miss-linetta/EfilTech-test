@@ -1,7 +1,9 @@
+import { SxProps, Theme } from '@mui/material';
+
 import theme from '@/styles/theme/theme';
 import breakpoints from '@/styles/theme/constants/breakpoints/breakpoints';
 
-export const container = {
+export const container: SxProps<Theme> = {
   display: 'flex',
   flexDirection: 'column',
   width: '100%',

@@ -1,3 +1,4 @@
+'use client';
 import React, { useState, useEffect } from 'react';
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
 import {
@@ -7,7 +8,7 @@ import {
   Typography,
   FormControl,
   Checkbox,
-  FormControlLabel,
+  FormControlLabel, TextField,
 } from '@mui/material';
 import { useRouter } from 'next/router';
 
@@ -41,13 +42,15 @@ const CheckoutForm: React.FC = () => {
   };
 
   useEffect(() => {
-    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-    const total = cart.reduce(
-      (acc: number, item: { price: number; quantity: number }) =>
-        acc + Number(item.price) * Number(item.quantity),
-      0,
-    );
-    setItemsTotal(total);
+    if (typeof window !== 'undefined') {
+      const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      const total = cart.reduce(
+        (acc: number, item: { price: number; quantity: number }) =>
+          acc + Number(item.price) * Number(item.quantity),
+        0,
+      );
+      setItemsTotal(total);
+    }
   }, []);
 
   const handleShippingChange = (value: 'DPD' | 'DHL' | 'DHL Express') => {
@@ -56,46 +59,41 @@ const CheckoutForm: React.FC = () => {
     else setShippingCost(26.5);
   };
 
-  const handleUpdateCartTotal = (newTotal: number) => {
-    setItemsTotal(newTotal);
-  };
-
   const handleSubmit = async (
     values: CheckoutFormValues,
     { resetForm }: FormikHelpers<CheckoutFormValues>,
   ) => {
     if (!values.data_protection_accepted) {
-      alert('Please accept the data protection agreement.');
+      if (typeof window !== 'undefined') alert('Please accept the data protection agreement.');
       return;
     }
 
-    const couponCode = localStorage.getItem('coupon_code') || '';
+    let couponCode = '';
+    let items: { flower_id: number; quantity: number; price: number }[] = [];
 
-    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-    const items = cart.map((item: { id: number; price: number; quantity: number }) => ({
-      flower_id: item.id,
-      quantity: item.quantity,
-      price: Number(item.price),
-    }));
+    if (typeof window !== 'undefined') {
+      couponCode = localStorage.getItem('coupon_code') || '';
+      const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      items = cart.map((item: { id: number; price: number; quantity: number }) => ({
+        flower_id: item.id,
+        quantity: item.quantity,
+        price: Number(item.price),
+      }));
+    }
 
     const totalPrice =
-      items.reduce(
-        (acc: number, item: { price: number; quantity: number }) =>
-          acc + item.price * item.quantity,
-        0,
-      ) + shippingCost;
+      items.reduce((acc, item) => acc + item.price * item.quantity, 0) + shippingCost;
 
     const orderData: OrderData = {
       ...values,
-      coupon_id: couponCode ? Number(couponCode) : undefined, // якщо у тебе тепер coupon_id
+      coupon_code: couponCode || undefined,
       total_price: totalPrice,
       items,
     };
 
     try {
       const response = await createOrder(orderData);
-      if (response) {
-        console.log('Order submitted successfully');
+      if (response && typeof window !== 'undefined') {
         resetForm();
         localStorage.removeItem('coupon_code');
         localStorage.removeItem('cart');
@@ -104,7 +102,7 @@ const CheckoutForm: React.FC = () => {
         setOrderError('Failed to place the order. Please try again later.');
       }
     } catch (error) {
-      console.error('Error submitting order:', error);
+      if (typeof console !== 'undefined') console.error('Error submitting order:', error);
       setOrderError('Failed to place the order. Please try again later.');
     }
   };
@@ -126,9 +124,9 @@ const CheckoutForm: React.FC = () => {
             <Typography variant="h3" gutterBottom>
               Shipping Method
             </Typography>
-            <FormControl style={styles.formGroup}>
+            <FormControl sx={styles.formGroup}>
               <Select
-                style={styles.formSelect}
+                sx={styles.formSelect}
                 name="shipping_method"
                 value={values.shipping_method}
                 onChange={(event) => {
@@ -149,12 +147,15 @@ const CheckoutForm: React.FC = () => {
             {['first_name', 'last_name', 'email', 'phone'].map((field) => (
               <Box sx={styles.formGroup} key={field}>
                 <Field
-                  type="text"
                   name={field}
+                  as={TextField}
                   placeholder={formatFieldName(field)}
-                  style={styles.formInput}
+                  fullWidth
                 />
-                <ErrorMessage name={field} component="div" style={styles.formError} />
+                <ErrorMessage
+                  name={field}
+                  render={(msg) => <Typography sx={styles.formError}>{msg}</Typography>}
+                />
               </Box>
             ))}
 
@@ -164,16 +165,19 @@ const CheckoutForm: React.FC = () => {
             {['delivery_instructions', 'gift_message'].map((field) => (
               <Box sx={styles.formGroup} key={field}>
                 <Field
-                  type="text"
                   name={field}
+                  as={TextField}
+                  fullWidth
                   placeholder={
                     field === 'gift_message'
                       ? 'Gift Message (Optional)'
                       : field.replace(/_/g, ' ').replace(/\b\w/g, (char) => char.toUpperCase())
                   }
-                  style={styles.formInput}
                 />
-                <ErrorMessage name={field} component="div" style={styles.formError} />
+                <ErrorMessage
+                  name={field}
+                  render={(msg) => <Typography sx={styles.formError}>{msg}</Typography>}
+                />
               </Box>
             ))}
 

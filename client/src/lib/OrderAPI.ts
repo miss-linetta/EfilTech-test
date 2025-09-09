@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 
 import { API_BASE_URL } from '@/lib/instance';
-import OrderDetails from '@/pages/order-details/[id]';
+import { OrderDetails } from '@/components/pages/order-details-page/OrderDetailsPage';
 
 export interface OrderItem {
   flower_id: number;
@@ -25,15 +25,23 @@ export interface OrderData {
 }
 
 export const createOrder = async (orderData: OrderData) => {
-  console.log('Sending data:', orderData);
+  if (typeof window !== 'undefined') {
+    console.log('Sending data:', orderData);
+  }
   try {
     const response = await axios.post(`${API_BASE_URL}/orders`, orderData, {
       headers: { 'Content-Type': 'application/json' },
     });
-    localStorage.removeItem('coupon_code');
+
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('coupon_code');
+    }
+
     return response.data;
   } catch (error) {
-    console.error('Error creating order:', error);
+    if (typeof window !== 'undefined') {
+      console.error('Error creating order:', error);
+    }
     return false;
   }
 };
