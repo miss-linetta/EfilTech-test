@@ -73,13 +73,15 @@ const CheckoutForm: React.FC = () => {
     let couponCode = '';
     let items: { flower_id: number; quantity: number; price: number }[] = [];
 
-    couponCode = localStorage.getItem('coupon_code') || '';
-    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-    items = cart.map((item: { id: number; price: number; quantity: number }) => ({
-      flower_id: item.id,
-      quantity: item.quantity,
-      price: Number(item.price),
-    }));
+    if (typeof window !== 'undefined') {
+      couponCode = localStorage.getItem('coupon_code') || '';
+      const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      items = cart.map((item: { id: number; price: number; quantity: number }) => ({
+        flower_id: item.id,
+        quantity: item.quantity,
+        price: Number(item.price),
+      }));
+    };
 
     const totalPrice =
       items.reduce((acc, item) => acc + item.price * item.quantity, 0) + shippingCost;
@@ -102,7 +104,7 @@ const CheckoutForm: React.FC = () => {
         setOrderError('Failed to place the order. Please try again later.');
       }
     } catch (error) {
-      console.error('Error submitting order:', error);
+      if (typeof console !== 'undefined') console.error('Error submitting order:', error);
       setOrderError('Failed to place the order. Please try again later.');
     }
   };
