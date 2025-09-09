@@ -46,7 +46,7 @@ export const createOrder = async (orderData: OrderData) => {
 
 export const getOrderDetails = async (id: number): Promise<OrderDetails> => {
   const response: AxiosResponse<OrderDetails> = await axios.get(
-    `${process.env.API_BASE_URL}/orders/details/${id}`,
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/orders/details/${id}`,
   );
   return response.data;
 };
