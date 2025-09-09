@@ -11,7 +11,7 @@ const validateCoupon = async (
 ): Promise<CouponValidationResult> => {
   try {
     const response = await axios.post<CouponValidationResult>(
-      `${process.env.API_BASE_URL}/coupons/validate`,
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/coupons/validate`,
       { coupon_code, cartTotal },
       {
         headers: {

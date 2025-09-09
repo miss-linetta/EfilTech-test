@@ -27,7 +27,7 @@ export const createOrder = async (orderData: OrderData) => {
     console.log('Sending data:', orderData);
   }
   try {
-    const response = await axios.post(`${process.env.API_BASE_URL}/orders`, orderData, {
+    const response = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/orders`, orderData, {
       headers: { 'Content-Type': 'application/json' },
     });
 
