@@ -1,6 +1,4 @@
 import axios, { AxiosResponse } from 'axios';
-
-import { API_BASE_URL } from '@/lib/instance';
 import { OrderDetails } from '@/components/pages/order-details-page/OrderDetailsPage';
 
 export interface OrderItem {
@@ -48,7 +46,7 @@ export const createOrder = async (orderData: OrderData) => {
 
 export const getOrderDetails = async (id: number): Promise<OrderDetails> => {
   const response: AxiosResponse<OrderDetails> = await axios.get(
-    `${API_BASE_URL}/orders/details/${id}`,
+    `${process.env.API_BASE_URL}/orders/details/${id}`,
   );
   return response.data;
 };

@@ -1,10 +1,8 @@
-import axios from 'axios';
-
-import { API_BASE_URL } from '@/lib/instance';
+import axios from 'axios'
 
 export const getAllArticles = async () => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/flowers`, {
+    const response = await axios.get(`${process.env.API_BASE_URL}/flowers`, {
       headers: { 'Content-Type': 'application/json' },
     });
     return response;

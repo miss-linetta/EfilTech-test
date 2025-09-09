@@ -1,7 +1,5 @@
 import axios, { AxiosError } from 'axios';
 
-import { API_BASE_URL } from '@/lib/instance';
-
 export interface CouponValidationResult {
   newCartTotal: number;
   message: string;
@@ -13,7 +11,7 @@ const validateCoupon = async (
 ): Promise<CouponValidationResult> => {
   try {
     const response = await axios.post<CouponValidationResult>(
-      `${API_BASE_URL}/coupons/validate`,
+      `${process.env.API_BASE_URL}/coupons/validate`,
       { coupon_code, cartTotal },
       {
         headers: {
