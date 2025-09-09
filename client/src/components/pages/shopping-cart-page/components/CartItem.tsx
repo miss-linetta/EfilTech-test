@@ -6,13 +6,7 @@ import AddIcon from '@mui/icons-material/Add';
 import * as styles from './CartItem.styles';
 
 import CustomButton from '@/components/common/custom-button/CustomButton';
-import { CartArticle } from '@/components/pages/shopping-cart-page/types';
-
-interface CartItemProps {
-  item: CartArticle;
-  onUpdateQuantity: (item: CartArticle) => void;
-  onDelete: (item: CartArticle) => void;
-}
+import { CartItemProps } from '@/components/pages/shopping-cart-page/components/types';
 
 const CartItem: React.FC<CartItemProps> = ({ item, onUpdateQuantity, onDelete }) => {
   const [quantity, setQuantity] = useState<number>(item.quantity || 1);
@@ -96,7 +90,7 @@ const CartItem: React.FC<CartItemProps> = ({ item, onUpdateQuantity, onDelete })
           <CustomButton
             size="small"
             onClick={() => {
-              onDelete(item);
+              onDelete();
               window.dispatchEvent(new CustomEvent('cartUpdate'));
             }}
             title="Delete"

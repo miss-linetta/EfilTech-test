@@ -86,22 +86,8 @@ export const accountCartContainer = {
   },
 };
 
-export const accountLink = {
-  color: theme.palette.background.default,
-  fontSize: '14px',
-  textTransform: 'uppercase',
-  textDecoration: 'none',
-  [theme.breakpoints.down(breakpoints.tablet)]: {
-    fontSize: '10px',
-  },
-};
-
 export const cartContainer = {
   display: 'flex',
   alignItems: 'center',
   gap: '10px',
-};
-
-export const cartText = {
-  color: theme.palette.background.default,
 };

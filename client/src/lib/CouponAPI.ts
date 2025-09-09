@@ -1,9 +1,6 @@
 import axios, { AxiosError } from 'axios';
 
-export interface CouponValidationResult {
-  newCartTotal: number;
-  message: string;
-}
+import { CouponValidationResult } from '@/lib/types';
 
 const validateCoupon = async (
   coupon_code: string,

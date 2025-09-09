@@ -1,26 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
-import { OrderDetails } from '@/components/pages/order-details-page/OrderDetailsPage';
 
-export interface OrderItem {
-  flower_id: number;
-  quantity: number;
-  price: number;
-}
-
-export interface OrderData {
-  first_name: string;
-  last_name: string;
-  email: string;
-  phone: string;
-  delivery_instructions?: string;
-  shipping_method: string;
-  data_protection_accepted: boolean;
-  newsletter_subscription: boolean;
-  gift_message?: string;
-  total_price: number;
-  coupon_code?: string;
-  items: OrderItem[];
-}
+import { OrderData } from '@/lib/types';
+import { OrderDetails } from '@/components/pages/order-details-page/types';
 
 export const createOrder = async (orderData: OrderData) => {
   if (typeof window !== 'undefined') {

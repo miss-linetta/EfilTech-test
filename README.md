@@ -64,12 +64,6 @@ npm run dev
 ---
 
 ## 🌍 Demo
-Deployment to a public hosting was not possible due to technical issues.  
-To still showcase the project’s functionality, I recorded a short video walkthrough demonstrating:
-- Browsing flower shops and products
-- Adding/removing items from the cart
-- Order creation with validation and saving to the database
-- Order details page with correct timezone display
-- Pagination for large product lists
+🔗 [Go to website](https://efil-tech-test-7wga0vsg8-misslinettas-projects.vercel.app)
 
 🎥 [Watch demo video](https://www.loom.com/share/d57612c95f9b4bc4a5633d828aa0d53c?sid=c2ed4787-201c-4ed4-9e11-cf44df867dcc)

@@ -1,4 +1,3 @@
-'use client';
 import React, { useState, useEffect } from 'react';
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
 import {
@@ -8,7 +7,8 @@ import {
   Typography,
   FormControl,
   Checkbox,
-  FormControlLabel, TextField,
+  FormControlLabel,
+  TextField,
 } from '@mui/material';
 import { useRouter } from 'next/router';
 
@@ -17,6 +17,7 @@ import * as styles from './CheckoutForm.styles';
 import validationSchema from '@/components/pages/checkout-page/components/checkout-form/validation/validationScheme';
 import CustomButton from '@/components/common/custom-button/CustomButton';
 import { createOrder, OrderData } from '@/lib/OrderAPI';
+import { formatFieldName } from '@/utils/formatFieldName';
 
 interface CheckoutFormValues extends OrderData {}
 
@@ -71,15 +72,13 @@ const CheckoutForm: React.FC = () => {
     let couponCode = '';
     let items: { flower_id: number; quantity: number; price: number }[] = [];
 
-    if (typeof window !== 'undefined') {
-      couponCode = localStorage.getItem('coupon_code') || '';
-      const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-      items = cart.map((item: { id: number; price: number; quantity: number }) => ({
-        flower_id: item.id,
-        quantity: item.quantity,
-        price: Number(item.price),
-      }));
-    }
+    couponCode = localStorage.getItem('coupon_code') || '';
+    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    items = cart.map((item: { id: number; price: number; quantity: number }) => ({
+      flower_id: item.id,
+      quantity: item.quantity,
+      price: Number(item.price),
+    }));
 
     const totalPrice =
       items.reduce((acc, item) => acc + item.price * item.quantity, 0) + shippingCost;
@@ -102,15 +101,10 @@ const CheckoutForm: React.FC = () => {
         setOrderError('Failed to place the order. Please try again later.');
       }
     } catch (error) {
-      if (typeof console !== 'undefined') console.error('Error submitting order:', error);
+      console.error('Error submitting order:', error);
       setOrderError('Failed to place the order. Please try again later.');
     }
   };
-
-  const formatFieldName = (field: string) =>
-    field
-      .replace(/([A-Z])/g, ' $1') // вставляє пробіл перед великою літерою
-      .replace(/^./, (char) => char.toUpperCase()); // робить першу літеру заголовною
 
   return (
     <Formik
@@ -146,12 +140,7 @@ const CheckoutForm: React.FC = () => {
             </Typography>
             {['first_name', 'last_name', 'email', 'phone'].map((field) => (
               <Box sx={styles.formGroup} key={field}>
-                <Field
-                  name={field}
-                  as={TextField}
-                  placeholder={formatFieldName(field)}
-                  fullWidth
-                />
+                <Field name={field} as={TextField} placeholder={formatFieldName(field)} fullWidth />
                 <ErrorMessage
                   name={field}
                   render={(msg) => <Typography sx={styles.formError}>{msg}</Typography>}
@@ -164,16 +153,7 @@ const CheckoutForm: React.FC = () => {
             </Typography>
             {['delivery_instructions', 'gift_message'].map((field) => (
               <Box sx={styles.formGroup} key={field}>
-                <Field
-                  name={field}
-                  as={TextField}
-                  fullWidth
-                  placeholder={
-                    field === 'gift_message'
-                      ? 'Gift Message (Optional)'
-                      : field.replace(/_/g, ' ').replace(/\b\w/g, (char) => char.toUpperCase())
-                  }
-                />
+                <Field name={field} as={TextField} fullWidth placeholder={formatFieldName(field)} />
                 <ErrorMessage
                   name={field}
                   render={(msg) => <Typography sx={styles.formError}>{msg}</Typography>}

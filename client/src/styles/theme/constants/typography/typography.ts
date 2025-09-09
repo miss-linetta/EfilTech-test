@@ -54,7 +54,7 @@ const typography: AppTypography = {
   },
   button: {
     fontSize: 14,
-    fontWeight: 600, // Assuming semibold for buttons
+    fontWeight: 600,
     lineHeight: 1.2, // 14px size with ~20px line height
   },
   caption: {
