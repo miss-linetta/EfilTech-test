@@ -16,8 +16,9 @@ import * as styles from './CheckoutForm.styles';
 
 import validationSchema from '@/components/pages/checkout-page/components/checkout-form/validation/validationScheme';
 import CustomButton from '@/components/common/custom-button/CustomButton';
-import { createOrder, OrderData } from '@/lib/OrderAPI';
+import { createOrder } from '@/lib/OrderAPI';
 import { formatFieldName } from '@/utils/formatFieldName';
+import { OrderData } from '@/lib/types';
 
 interface CheckoutFormValues extends OrderData {}
 

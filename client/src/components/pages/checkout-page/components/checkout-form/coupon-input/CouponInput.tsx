@@ -5,10 +5,11 @@ import * as styles from './CouponInput.styles';
 import { CouponInputProps, FeedbackType } from './types';
 
 import CustomButton from '@/components/common/custom-button/CustomButton';
-import CouponAPI, { CouponValidationResult } from '@/lib/CouponAPI';
+import CouponAPI from '@/lib/CouponAPI';
+import { CouponValidationResult } from '@/lib/types';
 
 const CouponInput: React.FC<CouponInputProps> = ({ cartTotal, onUpdateCartTotal }) => {
-  const [coupon_code, setCouponCode] = useState<string>(''); // snake_case
+  const [coupon_code, setCouponCode] = useState<string>('');
   const [feedback, setFeedback] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [feedbackType, setFeedbackType] = useState<FeedbackType>('');
