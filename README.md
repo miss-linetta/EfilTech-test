@@ -1,7 +1,7 @@
 # 🌸 Flower Delivery App
 
 Web application for ordering flower delivery.  
-Implemented as a test task for **ET-school**.
+Implemented as a test task for **EfilTech-school**.
 
 ---
 
