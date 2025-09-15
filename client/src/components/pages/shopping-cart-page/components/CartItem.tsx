@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
-import { Box, Card, CardContent, IconButton, TextField, Typography } from '@mui/material';
+import {
+  Box,
+  Card,
+  CardContent,
+  IconButton,
+  TextField,
+  Typography,
+} from '@mui/material';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
 
@@ -11,21 +18,16 @@ import { CartItemProps } from '@/components/pages/shopping-cart-page/components/
 const CartItem: React.FC<CartItemProps> = ({ item, onUpdateQuantity, onDelete }) => {
   const [quantity, setQuantity] = useState<number>(item.quantity || 1);
 
-  const canIncrease = quantity < (item.stock || Infinity);
-
   const itemPrice = item.price || 0;
-  const originalPrice = item.original_price || itemPrice;
+  const subtotal = itemPrice * quantity;
 
-  const discountPercentage = quantity === 8 ? 8 : quantity === 16 ? 16 : 0;
-  const discountAmount = originalPrice * (discountPercentage / 100);
-  const discountedPrice = discountPercentage ? originalPrice - discountAmount : itemPrice;
+  const canIncrease = quantity < (item.stock || Infinity);
 
   const handleIncrease = () => {
     if (canIncrease) {
       const newQuantity = quantity + 1;
       setQuantity(newQuantity);
       onUpdateQuantity({ ...item, quantity: newQuantity });
-      window.dispatchEvent(new CustomEvent('cartUpdate'));
     }
   };
 
@@ -33,14 +35,12 @@ const CartItem: React.FC<CartItemProps> = ({ item, onUpdateQuantity, onDelete })
     const newQuantity = Math.max(0, quantity - 1);
     setQuantity(newQuantity);
     onUpdateQuantity({ ...item, quantity: newQuantity });
-    window.dispatchEvent(new CustomEvent('cartUpdate'));
   };
 
   const handleQuantityChange = (value: number) => {
-    const newQuantity = Math.max(1, value);
+    const newQuantity = Math.max(0, value);
     setQuantity(newQuantity);
     onUpdateQuantity({ ...item, quantity: newQuantity });
-    window.dispatchEvent(new CustomEvent('cartUpdate'));
   };
 
   return (
@@ -51,23 +51,12 @@ const CartItem: React.FC<CartItemProps> = ({ item, onUpdateQuantity, onDelete })
         </Typography>
 
         <Box>
-          {discountPercentage > 0 ? (
-            <>
-              <Typography variant="body1" sx={styles.priceTextStyles}>
-                Original Price: <s>{originalPrice.toFixed(2)} EUR</s>
-              </Typography>
-              <Typography variant="body1" sx={styles.priceTextStyles}>
-                Discounted Price: {discountedPrice.toFixed(2)} EUR
-              </Typography>
-              <Typography variant="body2" color="success.main">
-                {discountPercentage}% Discount Applied
-              </Typography>
-            </>
-          ) : (
-            <Typography variant="body1" sx={styles.priceTextStyles}>
-              Price: {itemPrice} EUR
-            </Typography>
-          )}
+          <Typography variant="body1" sx={styles.priceTextStyles}>
+            Price: {itemPrice.toFixed(2)} EUR
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Subtotal: {subtotal.toFixed(2)} EUR
+          </Typography>
         </Box>
 
         <Box sx={styles.quantityContainer}>
@@ -75,11 +64,14 @@ const CartItem: React.FC<CartItemProps> = ({ item, onUpdateQuantity, onDelete })
             <RemoveIcon />
           </IconButton>
           <TextField
+            type="number"
             value={quantity}
-            onChange={(e) => handleQuantityChange(parseInt(e.target.value) || 1)}
+            onChange={(e) =>
+              handleQuantityChange(parseInt(e.target.value || '0', 10))
+            }
             sx={styles.smallSquareInput}
             variant="outlined"
-            inputProps={{ min: 1 }}
+            inputProps={{ min: 0 }}
           />
           <IconButton onClick={handleIncrease} disabled={!canIncrease}>
             <AddIcon />
@@ -89,10 +81,7 @@ const CartItem: React.FC<CartItemProps> = ({ item, onUpdateQuantity, onDelete })
         <Box sx={styles.buttonContainer}>
           <CustomButton
             size="small"
-            onClick={() => {
-              onDelete();
-              window.dispatchEvent(new CustomEvent('cartUpdate'));
-            }}
+            onClick={onDelete}
             title="Delete"
             sx={styles.button}
           />
