@@ -22,3 +22,7 @@ export const pageTitle = {
 export const aboutUsText = {
   fontSize: '16px',
 };
+
+export const select = {
+  minWidth: '150px',
+};

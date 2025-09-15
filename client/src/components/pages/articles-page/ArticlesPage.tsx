@@ -116,11 +116,12 @@ const ArticlesPage: React.FC = () => {
             <Box sx={styles.articlesContainer}>
               <Box sx={styles.filtersContainer}>
                 <FormControl size="small" sx={styles.selectControl}>
-                  <InputLabel id="shop-filter-label">Shop</InputLabel>
+                  <Typography sx={styles.label}>Shop:</Typography>
                   <Select
                     labelId="shop-filter-label"
                     value={shopFilter}
                     onChange={(e) => setShopFilter(e.target.value)}
+                    sx={styles.select}
                   >
                     <MenuItem value="all">All</MenuItem>
                     {shopNames.map((name) => (
@@ -132,11 +133,12 @@ const ArticlesPage: React.FC = () => {
                 </FormControl>
 
                 <FormControl size="small" sx={styles.selectControl}>
-                  <InputLabel id="type-filter-label">Type</InputLabel>
+                  <Typography sx={styles.label}>Type:</Typography>
                   <Select
                     labelId="type-filter-label"
                     value={typeFilter}
                     onChange={(e) => setTypeFilter(e.target.value as 'all' | 'flower' | 'bouquet')}
+                    sx={styles.select}
                   >
                     <MenuItem value="all">All</MenuItem>
                     <MenuItem value="flower">Flowers</MenuItem>

@@ -27,7 +27,7 @@ export const articlesContainer = {
 export const filtersContainer = {
   display: 'flex',
   flexWrap: 'wrap',
-  gap: '16px',
+  gap: '40px',
   marginBottom: '24px',
   justifyContent: 'center',
   alignItems: 'center',
@@ -39,11 +39,22 @@ export const filtersContainer = {
 };
 
 export const selectControl = {
-  minWidth: '150px',
-  [theme.breakpoints.down(breakpoints.mobileMedium)]: {
-    width: '100%',
-  },
+  marginBottom: '16px',
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'center',
+  height: 'auto'
 };
+
+export const label = {
+  marginRight: '8px',
+};
+
+export const select = {
+  minWidth: '150px',
+  padding: '7px',
+};
+
 
 export const articlesList = {
   display: 'grid',
